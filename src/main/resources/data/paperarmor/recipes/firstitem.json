@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "xxx",
+    " # ",
+    " # "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:stick"
+    },
+    "x": {
+      "item": "paperarmor:firstblock"
+    }
+  },
+  "result": {
+    "item": "paperarmor:firstitem"
+  }
+}

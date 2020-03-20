@@ -1,0 +1,7 @@
+{
+  "item.paperarmor.firstitem": "First Item",
+  "block.paperarmor.firstblock": "First Block",
+
+  "_comment": "Creative Tabs",
+  "itemGroup.paperarmor" : "Paper Armor"
+}
