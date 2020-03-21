@@ -1,6 +1,8 @@
 package com.supergyro.paperarmor.blocks;
 
 
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -42,9 +44,23 @@ public class FirstBlockTile extends TileEntity implements ITickableTileEntity {
         return super.write(tag);
     }
 
-    private ItemStackHandler getHandler(){
+    private ItemStackHandler getHandler() {
         if (handler == null) {
-            handler = new ItemStackHandler();
+            handler = new ItemStackHandler(1) {
+                @Override
+                public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+                    return stack.getItem() == Items.DIAMOND;
+                }
+
+                @Nonnull
+                @Override
+                public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+                    if (stack.getItem() != Items.DIAMOND) {
+                        return stack;
+                    }
+                    return super.insertItem(slot, stack, simulate);
+                }
+            };
         }
         return handler;
     }
