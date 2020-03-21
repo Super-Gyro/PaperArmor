@@ -1,6 +1,12 @@
 {
-  "parent": "block/cube_all",
+  "parent": "block/cube",
   "textures": {
-      "all": "paperarmor:block/firstblock"
+    "particle": "paperarmor:block/firstblock",
+    "down": "paperarmor:block/firstblock",
+    "up": "paperarmor:block/firstblock",
+    "east": "paperarmor:block/firstblock",
+    "west": "paperarmor:block/firstblock",
+    "north": "paperarmor:block/firstblock_front",
+    "south": "paperarmor:block/firstblock"
   }
 }

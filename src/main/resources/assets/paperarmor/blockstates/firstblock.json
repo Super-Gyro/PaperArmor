@@ -1,5 +1,10 @@
 {
   "variants": {
-    "": {"model": "paperarmor:block/firstblock"}
+    "facing=north": { "model": "paperarmor:block/firstblock" },
+    "facing=south": { "model": "paperarmor:block/firstblock", "y": 180 },
+    "facing=west": { "model": "paperarmor:block/firstblock", "y": 270 },
+    "facing=east": { "model": "paperarmor:block/firstblock", "y": 90 },
+    "facing=up": { "model": "paperarmor:block/firstblock", "x": -90 },
+    "facing=down": { "model": "paperarmor:block/firstblock", "x": 90 }
   }
 }

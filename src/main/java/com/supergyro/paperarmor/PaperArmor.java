@@ -1,6 +1,7 @@
 package com.supergyro.paperarmor;
 
 
+import com.supergyro.paperarmor.blocks.FirstBlockTile;
 import com.supergyro.paperarmor.items.FirstItem;
 import com.supergyro.paperarmor.setup.ServerProxy;
 import com.supergyro.paperarmor.setup.ClientProxy;
@@ -11,6 +12,7 @@ import com.supergyro.paperarmor.setup.ModSetup;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
@@ -53,6 +55,11 @@ public class PaperArmor {
             Item.Properties properties = new Item.Properties().group(setup.itemGroup);
             event.getRegistry().register(new BlockItem(ModBlocks.FIRSTBLOCK, properties).setRegistryName("firstblock"));
             event.getRegistry().register(new FirstItem());
+        }
+
+        @SubscribeEvent
+        public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
+            event.getRegistry().register(TileEntityType.Builder.create(FirstBlockTile::new, ModBlocks.FIRSTBLOCK).build(null).setRegistryName("firstblock"));
         }
     }
 }
