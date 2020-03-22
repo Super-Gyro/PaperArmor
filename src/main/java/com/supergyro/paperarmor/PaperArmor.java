@@ -1,6 +1,7 @@
 package com.supergyro.paperarmor;
 
 
+import com.supergyro.paperarmor.blocks.FirstBlockContainer;
 import com.supergyro.paperarmor.blocks.FirstBlockTile;
 import com.supergyro.paperarmor.items.FirstItem;
 import com.supergyro.paperarmor.setup.ServerProxy;
@@ -10,9 +11,12 @@ import com.supergyro.paperarmor.blocks.FirstBlock;
 import com.supergyro.paperarmor.blocks.ModBlocks;
 import com.supergyro.paperarmor.setup.ModSetup;
 import net.minecraft.block.Block;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
@@ -21,6 +25,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.awt.print.Paper;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod("paperarmor")
@@ -31,6 +37,8 @@ public class PaperArmor {
     public static final IProxy proxy = (IProxy) DistExecutor.runForDist(() -> () -> new ClientProxy(), () -> () -> new ServerProxy());
 
     public static ModSetup setup = new ModSetup();
+
+    public static final String MODID = "paperarmor";
 
     public PaperArmor() {
         // Register the setup method for modloading
@@ -60,6 +68,14 @@ public class PaperArmor {
         @SubscribeEvent
         public static void onTileEntityRegistry(final RegistryEvent.Register<TileEntityType<?>> event) {
             event.getRegistry().register(TileEntityType.Builder.create(FirstBlockTile::new, ModBlocks.FIRSTBLOCK).build(null).setRegistryName("firstblock"));
+        }
+
+        @SubscribeEvent
+        public static void onContainerRegistry(final RegistryEvent.Register<ContainerType<?>> event) {
+            event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> {
+                BlockPos pos = data.readBlockPos();
+                return new FirstBlockContainer(windowId, PaperArmor.proxy.getClientWorld(), pos, inv, PaperArmor.proxy.getClientPlayer());
+            }).setRegistryName("firstblock"));
         }
     }
 }
