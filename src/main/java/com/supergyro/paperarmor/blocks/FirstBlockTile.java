@@ -32,7 +32,7 @@ public class FirstBlockTile extends TileEntity implements ITickableTileEntity, I
     private LazyOptional<IItemHandler> handler = LazyOptional.of(this::createHandler);
 
     public FirstBlockTile() {
-            super(FIRSTBLOCK_TILE);
+        super(FIRSTBLOCK_TILE);
     }
 
     @Override
