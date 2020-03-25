@@ -18,6 +18,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -54,7 +55,7 @@ public class FirstBlock extends Block {
     }
 
     @Override
-    public ActionResultType func_225533_a_(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult trace) {
+    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult trace) {
         if (!world.isRemote) {
             TileEntity tileEntity = world.getTileEntity(pos);
             if (tileEntity instanceof INamedContainerProvider) {
@@ -64,13 +65,14 @@ public class FirstBlock extends Block {
             }
             return ActionResultType.SUCCESS;
         }
-        return super.func_225533_a_(state, world, pos, player, hand, trace);
+        return super.onBlockActivated(state, world, pos, player, hand, trace);
     }
 
     public static Direction getFacingFromEntity(BlockPos clickedBlock, LivingEntity entity) {
-        return Direction.getFacingFromVector((float) (entity.func_226277_ct_() - clickedBlock.getX()),
-                (float) (entity.func_226278_cu_() - clickedBlock.getY()),
-                (float) (entity.func_226281_cx_() - clickedBlock.getZ()));
+        Vec3d vec = entity.getPositionVec();
+        return Direction.getFacingFromVector((float) (vec.x - clickedBlock.getX()),
+                (float) (vec.y - clickedBlock.getY()),
+                (float) (vec.z - clickedBlock.getZ()));
     }
 
     @Override
