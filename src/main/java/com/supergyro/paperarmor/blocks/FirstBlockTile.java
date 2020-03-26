@@ -64,7 +64,8 @@ public class FirstBlockTile extends TileEntity implements ITickableTileEntity, I
     public void read(CompoundNBT tag) {
         CompoundNBT invTag = tag.getCompound("inv");
         handler.ifPresent(h -> ((INBTSerializable<CompoundNBT>)h).deserializeNBT(invTag));
-        energy.ifPresent(h -> ((CustomEnergyStorage)h).setEnergy(invTag.getInt("energy")));
+        CompoundNBT energyTang = tag.getCompound("energy");
+        energy.ifPresent(h -> ((INBTSerializable<CompoundNBT>) h).deserializeNBT(energyTang));
         super.read(tag);
     }
 
@@ -74,7 +75,10 @@ public class FirstBlockTile extends TileEntity implements ITickableTileEntity, I
             CompoundNBT compound = ((INBTSerializable<CompoundNBT>)h).serializeNBT();
             tag.put("inv", compound);
         });
-        energy.ifPresent(h -> tag.putInt("energy", h.getEnergyStored()));
+        energy.ifPresent(h -> {
+            CompoundNBT compound = ((INBTSerializable<CompoundNBT>)h).serializeNBT();
+            tag.put("energy", compound);
+        });
         return super.write(tag);
     }
 
