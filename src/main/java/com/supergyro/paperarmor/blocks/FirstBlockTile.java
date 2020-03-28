@@ -1,6 +1,7 @@
 package com.supergyro.paperarmor.blocks;
 
 
+import com.supergyro.paperarmor.Config;
 import com.supergyro.paperarmor.tools.CustomEnergyStorage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -29,6 +30,8 @@ import javax.annotation.Nullable;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import static com.supergyro.paperarmor.blocks.ModBlocks.FIRSTBLOCK_TILE;
 
 public class FirstBlockTile extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
@@ -47,17 +50,48 @@ public class FirstBlockTile extends TileEntity implements ITickableTileEntity, I
         if (counter > 0) {
             counter--;
             if (counter <= 0) {
-                energy.ifPresent(e -> ((CustomEnergyStorage)e).addEnergy(1000));
+                energy.ifPresent(e -> ((CustomEnergyStorage)e).addEnergy(Config.FIRSTBLOCK_GENERATE.get()));
             }
+            markDirty();
         } else {
             handler.ifPresent(h -> {
                 ItemStack stack = h.getStackInSlot(0);
                 if (stack.getItem() == Items.DIAMOND) {
                     h.extractItem(0, 1, false);
-                    counter = 20;
+                    counter = Config.FIRSTBLOCK_TICKS.get();
                 }
             });
         }
+
+        sendOutPower();
+    }
+
+    private void sendOutPower() {
+        energy.ifPresent(energy -> {
+            AtomicInteger capacity = new AtomicInteger(energy.getEnergyStored());
+            if (capacity.get() > 0) {
+                for (Direction direction : Direction.values()) {
+                    TileEntity te = world.getTileEntity(pos.offset(direction));
+                    if (te != null) {
+                        boolean doContinue = te.getCapability(CapabilityEnergy.ENERGY, direction).map(handler -> {
+                                    if (handler.canReceive()) {
+                                        int received = handler.receiveEnergy(Math.min(capacity.get(), 100), false);
+                                        capacity.addAndGet(-received);
+                                        ((CustomEnergyStorage) energy).consumeEnergy(received);
+                                        markDirty();
+                                        return capacity.get() > 0;
+                                    } else {
+                                        return true;
+                                    }
+                                }
+                        ).orElse(true);
+                        if (!doContinue) {
+                            return;
+                        }
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -84,6 +118,12 @@ public class FirstBlockTile extends TileEntity implements ITickableTileEntity, I
 
     private ItemStackHandler createHandler() {
         return new ItemStackHandler(1) {
+
+            @Override
+            protected void onContentsChanged(int slot) {
+                markDirty();
+            }
+
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
                 return stack.getItem() == Items.DIAMOND;
@@ -101,7 +141,7 @@ public class FirstBlockTile extends TileEntity implements ITickableTileEntity, I
     }
 
     private IEnergyStorage createEnergy(){
-        return new CustomEnergyStorage(100000, 0);
+        return new CustomEnergyStorage(Config.FIRSTBLOCK_MAXPOWER.get(), 0);
     }
     @Nonnull
     @Override
