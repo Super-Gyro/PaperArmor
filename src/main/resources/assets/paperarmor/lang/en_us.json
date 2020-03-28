@@ -3,5 +3,7 @@
   "block.paperarmor.firstblock": "First Block",
 
   "_comment": "Creative Tabs",
-  "itemGroup.paperarmor" : "Paper Armor"
+  "itemGroup.paperarmor" : "Paper Armor",
+
+  "block.paperarmor.blockpaper": "Block of Paper"
 }

@@ -1,14 +1,11 @@
 package com.supergyro.paperarmor;
 
 
-import com.supergyro.paperarmor.blocks.FirstBlockContainer;
-import com.supergyro.paperarmor.blocks.FirstBlockTile;
+import com.supergyro.paperarmor.blocks.*;
 import com.supergyro.paperarmor.items.FirstItem;
 import com.supergyro.paperarmor.setup.ServerProxy;
 import com.supergyro.paperarmor.setup.ClientProxy;
 import com.supergyro.paperarmor.setup.IProxy;
-import com.supergyro.paperarmor.blocks.FirstBlock;
-import com.supergyro.paperarmor.blocks.ModBlocks;
 import com.supergyro.paperarmor.setup.ModSetup;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.container.ContainerType;
@@ -57,12 +54,17 @@ public class PaperArmor {
         @SubscribeEvent
         public static void onBlocksRegistry(final RegistryEvent.Register<Block> event) {
             event.getRegistry().register(new FirstBlock());
+            //my blocks
+            event.getRegistry().register(new BlockPaper());
         }
         @SubscribeEvent
         public static void onItemRegistry(final RegistryEvent.Register<Item> event) {
             Item.Properties properties = new Item.Properties().group(setup.itemGroup);
             event.getRegistry().register(new BlockItem(ModBlocks.FIRSTBLOCK, properties).setRegistryName("firstblock"));
             event.getRegistry().register(new FirstItem());
+
+            //my blocks
+            event.getRegistry().register(new BlockItem(ModBlocks.BLOCKPAPER, properties).setRegistryName("blockpaper"));
         }
 
         @SubscribeEvent

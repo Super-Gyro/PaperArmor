@@ -13,4 +13,8 @@ public class ModBlocks {
 
     @ObjectHolder("paperarmor:firstblock")
     public static ContainerType<FirstBlockContainer> FIRSTBLOCK_CONTAINER;
+
+    // my blocks
+    @ObjectHolder("paperarmor:blockpaper")
+    public static BlockPaper BLOCKPAPER;
 }
