@@ -1,10 +1,17 @@
 {
   "variants": {
-    "facing=north": { "model": "paperarmor:block/firstblock" },
-    "facing=south": { "model": "paperarmor:block/firstblock", "y": 180 },
-    "facing=west": { "model": "paperarmor:block/firstblock", "y": 270 },
-    "facing=east": { "model": "paperarmor:block/firstblock", "y": 90 },
-    "facing=up": { "model": "paperarmor:block/firstblock", "x": -90 },
-    "facing=down": { "model": "paperarmor:block/firstblock", "x": 90 }
+    "facing=north,powered=false": { "model": "paperarmor:block/firstblock" },
+    "facing=south,powered=false": { "model": "paperarmor:block/firstblock", "y": 180 },
+    "facing=west,powered=false": { "model": "paperarmor:block/firstblock", "y": 270 },
+    "facing=east,powered=false": { "model": "paperarmor:block/firstblock", "y": 90 },
+    "facing=up,powered=false": { "model": "paperarmor:block/firstblock", "x": -90 },
+    "facing=down,powered=false": { "model": "paperarmor:block/firstblock", "x": 90 },
+    "facing=north,powered=true": { "model": "paperarmor:block/firstblock_powered" },
+    "facing=south,powered=true": { "model": "paperarmor:block/firstblock_powered", "y": 180 },
+    "facing=west,powered=true": { "model": "paperarmor:block/firstblock_powered", "y": 270 },
+    "facing=east,powered=true": { "model": "paperarmor:block/firstblock_powered", "y": 90 },
+    "facing=up,powered=true": { "model": "paperarmor:block/firstblock_powered", "x": -90 },
+    "facing=down,powered=true": { "model": "paperarmor:block/firstblock_powered", "x": 90 }
+
   }
 }
